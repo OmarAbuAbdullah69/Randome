@@ -1,3 +1,4 @@
+
 #ifndef Orray_Header
 #define Orray_Header
 
@@ -12,7 +13,7 @@ class Orray
         size_t m_Length = 0;
         T *m_Data = nullptr;
     public:
-        Orray();
+        Orray(){}
         Orray(size_t size);
         Orray(std::initializer_list<T> list);
         Orray(Orray<T> &&other);
@@ -90,6 +91,7 @@ int Orray<T>::PushBack(T new_obj)
     if(!new_pos)
         return -1;
     memmove(new_pos, m_Data, m_Length * sizeof(T));
+    m_Data = new_pos;
     m_Data[m_Length] = new_obj;
     m_Length++;
     return 0;
