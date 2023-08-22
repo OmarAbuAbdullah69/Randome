@@ -1,4 +1,5 @@
-#pragma once
+#ifndef Randome_h
+#define Randome_h
 
 #include <algorithm>
 #include <cmath>
@@ -46,3 +47,4 @@ static	inline void Feed()
 		return (float(rand())/(float)std::numeric_limits<int>::max())*std::abs(en-st)+std::min(st, en);
 	}
 }
+#endif //Random_h
