@@ -29,8 +29,6 @@ class Orray
         T *end() const;
 };
 
-#ifdef Orray_implementation
-
 template<typename T>
 Orray<T>::Orray(size_t size)
 {
@@ -122,7 +120,5 @@ T *Orray<T>::end() const
 {
     return m_Data+m_Length;
 }
-
-#endif // Orray_implementation
 
 #endif // Orray_Header
