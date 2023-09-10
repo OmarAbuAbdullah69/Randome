@@ -9,11 +9,12 @@ namespace OAA
 	{
 		public:
 			String(const char *s);
+			String(const String &s);
 			const char * cstr();
 			inline size_t len() const {return m_Lenght-1;}
-			String operator +(String s);
+			String operator +(const String &s);
 			String operator +(const char *s);
-			void operator +=(String s);
+			void operator +=(const String &s);
 			void operator +=(const char *s);
 			~String();
 		private:
@@ -28,6 +29,13 @@ namespace OAA
 {
 	String::String(char *c_str, size_t lenght)
 		:m_CString(c_str), m_Lenght(lenght){
+	}
+	String::String(const String &s)
+	{
+		m_Lenght = s.m_Lenght;
+		m_CString = new char[m_Lenght];
+		memcpy(m_CString, s.m_CString, sizeof(char)*m_Lenght);
+
 	}
 	String::String(const char *s)
 		:m_Lenght(strlen(s)+1)
@@ -44,7 +52,7 @@ namespace OAA
 		return m_CString;
 	}
 
-	String String::operator +(String s)
+	String String::operator +(const String &s)
 	{
 		size_t lenght = m_Lenght + s.m_Lenght - 1;
 		char *data = new char[lenght];
@@ -60,7 +68,7 @@ namespace OAA
 		memcpy(data+m_Lenght-1, s, sizeof(char)*strlen(s));
 		return String(data, lenght);
 	}
-	void String::operator +=(String s)
+	void String::operator +=(const String &s)
 	{
 		size_t lenght = m_Lenght + s.m_Lenght - 1;
 		char *data = new char[lenght];
