@@ -1,8 +1,6 @@
 #ifndef OAA_STRING_H
 #define OAA_STRING_H
 
-
-#include <iostream>
 #include <cstring>
 
 namespace OAA
@@ -34,7 +32,6 @@ namespace OAA
 	String::String(const char *s)
 		:m_Lenght(strlen(s)+1)
 	{
-		std::cout << "constructed" << std::endl;
 		m_CString = new char[m_Lenght];
 		memcpy(m_CString, s, sizeof(char)*m_Lenght);
 	}
