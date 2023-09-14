@@ -127,7 +127,7 @@ namespace OAA
 	{
 		return m_Data+m_Length;
 	}
-}
-#endif // Array_implementation
 
+#endif // Array_implementation
+}
 #endif // Array_Header
