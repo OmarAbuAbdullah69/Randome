@@ -23,7 +23,7 @@ namespace OAA
 			void Clear();
 
 			T &operator [](size_t index);
-			size_t Lenght() const;
+			size_t Length() const;
 
 			int PushBack(T new_obj);
 			int Insert(size_t i, T new_obj);
@@ -58,7 +58,7 @@ namespace OAA
 	template<typename T>
 	Array<T>::Array(Array<T> &&other)
 	{
-		m_Length = other.Lenght();
+		m_Length = other.Length();
 		m_Data = &other[0];
 		other.Clear();
 	}
@@ -77,7 +77,7 @@ namespace OAA
 	}
 
 	template<typename T>
-	size_t Array<T>::Lenght() const
+	size_t Array<T>::Length() const
 	{
 		return m_Length;
 	}
