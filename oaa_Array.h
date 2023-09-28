@@ -92,7 +92,9 @@ namespace OAA
 	template<typename T>
 	T &Array<T>::operator [](size_t index)
 	{
-		return m_Data[index];
+		if(m_Data)
+			return m_Data[index];
+		return nullptr;
 	}
 
 	template<typename T>
