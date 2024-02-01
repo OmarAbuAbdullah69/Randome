@@ -1,50 +1,107 @@
-#ifndef Randome_h
-#define Randome_h
+#pragma once 
 
-#include <algorithm>
 #include <cmath>
-#include <cstdlib>
-#include <ctime>
-#include <limits>
+#include<cstdlib>
+#include<limits>
 
-namespace Random
-{
-static unsigned long seed = 0;
-static	inline void Feed()
+namespace oaa {
+	
+	class CSTD // standared library
 	{
-		srand(unsigned (std::time(0) + seed));
-		seed++;
-	}
-	inline int RandInt()
-	{
-		Feed();
-		return int(rand());
-	}
+			protected:
+			CSTD(unsigned s)
+			{
+				std::srand(s);
+			}
+			inline void seed(int s)
+			{
+				std::srand(s);
+			}
+			inline unsigned next()
+			{
+				return std::rand();
+			}
+	};
+	
+//class LCG // to do later
+//{
+//	protected:
+//		LCG(unsigned s)
+//			:last(s){}
+//		inline unsigned next()
+//		{
+//			last = (a*last+c)%m;
+//			return last;
+//		}
+//	private:
+//		unsigned last;
+//		unsigned m = 9;//std::pow(2, sizeof(unsigned)*8);
+//		unsigned a = 2;
+//		unsigned c = 0;
+//};
 
-	inline int RandInt(unsigned i)
+	
+	template<class PRNG>
+	class Random: public PRNG
 	{
-		Feed();
-		return int(rand() %(i+1) );
+		public:
+			Random(int seed);
+			inline void SetSeed(int seed);
+			inline int GetRandom();
+			float GetRandFloat(float s=0, float e=0);
+			int GetRandInt(int s, int e);
+	};
+
+	template<class PRNG>
+	float Random<PRNG>::GetRandFloat(float s, float e)
+	{
+float n = GetRandom()/(float)std::numeric_limits<int>::max();
+		if(!(s||e))
+		{
+			return n;
+		}
+		if(e<s)
+		{
+			int w=s;
+			s=e;
+			e=w;
+		}
+	
+		e-=s;
+		
+		return s+e*n;
+
+
 	}
-	inline int RandInt(int s, int e)
+	template<class PRNG>
+	int Random<PRNG>::GetRandInt(int s, int e)
 	{
-		Feed();
-		return int((rand() % (abs(e-s)+1))+std::min(s, e));
+		if(e<s)
+		{
+			int w=s;
+			s=e;
+			e=w;
+		}
+	
+		e-=s;
+		
+		return s+std::round(e*GetRandFloat());
+
 	}
-	inline float RandFloat()
+	
+	template<class PRNG>
+	Random<PRNG>::Random(int seed)
+		:PRNG(seed)
 	{
-		Feed();
-		return (float(rand())/(float)std::numeric_limits<int>::max());
 	}
-	inline float RandFloat(float fl)
+	template<class PRNG>
+	inline void Random<PRNG>::SetSeed(int seed)
 	{
-		Feed();
-		return (float(rand())/(float)std::numeric_limits<int>::max())*fl;
+		PRNG::seed();
 	}
-	inline float RandFloat(float st, float en)
+	template<class PRNG>
+	inline int Random<PRNG>::GetRandom()
 	{
-		Feed();
-		return (float(rand())/(float)std::numeric_limits<int>::max())*std::abs(en-st)+std::min(st, en);
+		return PRNG::next();
 	}
 }
-#endif //Random_h
